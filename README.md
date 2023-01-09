@@ -17,7 +17,6 @@ w/ options:
 ```bash
 --remote-name [name] # default is `upstream`
 ```
+https://user-images.githubusercontent.com/49113249/211235714-e993a5f6-d6f3-4f87-aa1c-59d47cb1d74e.mov
 
-
-https://user-images.githubusercontent.com/49113249/211235565-27e33355-78fa-49ce-b597-5713b234b2df.mov
 
