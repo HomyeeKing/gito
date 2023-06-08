@@ -42,7 +42,7 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - name: Print workspace
-        run: echo $GITHUB_WORKSPACE
+        run: ls $GITHUB_WORKSPACE
       - uses: actions/checkout@v3
       - name: Setup node
         uses: actions/setup-node@v3
