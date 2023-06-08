@@ -12,12 +12,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@homy/gito-core-darwin-x64@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@homy/gito-core-darwin-x64@npm:1.0.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@homy/gito-core-linux-x64-gnu@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@homy/gito-core-linux-x64-gnu@npm:1.0.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@homy/gito-core-win32-x64-msvc@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@homy/gito-core-win32-x64-msvc@npm:1.0.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@homy/gito-core@workspace:.":
   version: 0.0.0-use.local
   resolution: "@homy/gito-core@workspace:."
   dependencies:
+    "@homy/gito-core-darwin-x64": 1.0.0
+    "@homy/gito-core-linux-x64-gnu": 1.0.0
+    "@homy/gito-core-win32-x64-msvc": 1.0.0
     "@napi-rs/cli": ^2.15.2
     ava: ^5.1.1
+  dependenciesMeta:
+    "@homy/gito-core-darwin-x64":
+      optional: true
+    "@homy/gito-core-linux-x64-gnu":
+      optional: true
+    "@homy/gito-core-win32-x64-msvc":
+      optional: true
   languageName: unknown
   linkType: soft
 

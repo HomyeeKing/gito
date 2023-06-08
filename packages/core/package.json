@@ -23,15 +23,16 @@
     "build": "napi build --platform --release",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
+    "publish:allF": "node publish-all.js",
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
   },
   "packageManager": "yarn@3.5.1",
   "optionalDependencies": {
-    "@homy/gito-core-win32-x64-msvc": "1.0.0",
     "@homy/gito-core-darwin-x64": "1.0.0",
-    "@homy/gito-core-linux-x64-gnu": "1.0.0"
+    "@homy/gito-core-linux-x64-gnu": "1.0.0",
+    "@homy/gito-core-win32-x64-msvc": "1.0.0"
   },
   "repository": "git@github.com:HomyeeKing/gito.git"
 }
