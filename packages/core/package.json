@@ -5,7 +5,11 @@
   "types": "index.d.ts",
   "napi": {
     "name": "gito-core",
-    "triples": {}
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin"
+      ]
+    }
   },
   "license": "MIT",
   "devDependencies": {
@@ -23,7 +27,7 @@
     "build": "napi build --platform --release",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
-    "publish:allF": "node publish-all.js",
+    "publish:all": "node publish-all.js",
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
