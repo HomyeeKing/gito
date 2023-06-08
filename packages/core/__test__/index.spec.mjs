@@ -1,7 +1,14 @@
-import test from 'ava'
+import test from 'ava';
 
-import { sum } from '../index.js'
+import { getGitInfo } from '../index.js';
 
-test('sum from native', (t) => {
-  t.is(sum(1, 2), 3)
-})
+test('get git info', (t) => {
+  const info = getGitInfo();
+  t.deepEqual(info, {
+    username: 'HomyeeKing',
+    email: 'HomyeeKing@gmail.com',
+    sshUrl: 'git@github.com:HomyeeKing/gito.git',
+    userRepo: 'HomyeeKing/gito',
+    currentBranch: 'master',
+  });
+});
