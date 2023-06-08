@@ -50,6 +50,8 @@ jobs:
         with:
           node-version: 18
           check-latest: true
+          cache: true
+          cache-dependency-path: packages/core/yarn.lock
       - name: Install
         uses: dtolnay/rust-toolchain@stable
         if: ${{ !matrix.settings.docker }}
