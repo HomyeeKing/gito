@@ -50,9 +50,9 @@ jobs:
         with:
           node-version: 18
           check-latest: true
-          cache: true
+          cache: 'yarn'
           cache-dependency-path: packages/core/yarn.lock
-      - name: Install
+      - name: Install Rust Tools
         uses: dtolnay/rust-toolchain@stable
         if: ${{ !matrix.settings.docker }}
         with:
@@ -80,7 +80,7 @@ jobs:
         if: matrix.settings.target == 'i686-pc-windows-msvc'
         run: yarn config set supportedArchitectures.cpu "ia32"
         shell: bash
-      - name: Install dependencies
+      - name: Yarn Install
         run: yarn install
       - name: Setup node x86
         uses: actions/setup-node@v3
