@@ -24,7 +24,8 @@
         "user",
         "ls"
       ],
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build gito_core"
     },
     {
       "type": "lldb",

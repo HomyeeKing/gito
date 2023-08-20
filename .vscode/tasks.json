@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "packages/core",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "label": "build gito_core",
+      "detail": "napi build --platform --release"
+    }
+  ]
+}
