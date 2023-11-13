@@ -12,7 +12,8 @@ license.workspace = true
 categories = ["development-tools"]
 
 [lib]
-crate-type = ["cdylib"]
+# https://github.com/rust-lang/cargo/issues/12653#issuecomment-1713253593
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix

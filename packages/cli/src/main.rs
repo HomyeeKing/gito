@@ -2,6 +2,7 @@ mod constants;
 mod utils;
 //  command
 mod amend_command;
+mod branch_command;
 mod get_upstream;
 mod init_command;
 mod user_command;
@@ -30,6 +31,29 @@ enum Commands {
     Amend { alias: String },
     #[command(about = "git init with specific user info by alias")]
     Init { alias: String },
+    #[command(about = "branch actions", alias = "br")]
+    Branch(BranchArgs),
+}
+
+#[derive(Debug, Args)]
+#[command(args_conflicts_with_subcommands = true)]
+struct BranchArgs {
+    #[command(subcommand)]
+    command: BranchCmd,
+}
+
+#[derive(Debug, Subcommand)]
+enum BranchCmd {
+    #[command(about = "delete local/remote/both branch", alias = "del")]
+    Delete {
+        branch_name: String,
+        #[arg(long = "local", default_value = "true", short = 'l')]
+        local: bool,
+        #[arg(long = "remote", short = 'r')]
+        remote: bool,
+        #[arg(long = "both")]
+        both: bool,
+    },
 }
 
 #[derive(Debug, Args)]
@@ -73,7 +97,7 @@ enum UserCmd {
 async fn main() {
     let git_info = get_git_info();
     let args = Cli::parse();
-    
+
     match args.command {
         Commands::GetUpstream { remote_name } => {
             get_upstream::run(&remote_name, &git_info).await;
@@ -90,5 +114,13 @@ async fn main() {
         },
         Commands::Amend { alias } => amend_command::run(&alias),
         Commands::Init { alias } => init_command::run(&alias),
+        Commands::Branch(branch) => match branch.command {
+            BranchCmd::Delete {
+                branch_name,
+                local,
+                remote,
+                both,
+            } => branch_command::delete::run(&branch_name, local, remote, both),
+        },
     }
 }
