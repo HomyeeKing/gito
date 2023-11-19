@@ -12,12 +12,9 @@ fs.readdirSync(rootDir, { withFileTypes: true })
     const dirPath = `${rootDir}/${dirent.name}`;
     console.log(`Publishing ${dirPath}...`);
     try {
-      execSync(`npm publish ${isPre ? '--tag beta' : ''} --access public`, {
+      execSync(`npm publish ${isPre ? '--tag beta' : ''} --access public --registry=https://registry.npmjs.org/`, {
         cwd: dirPath,
         stdio: 'inherit',
-        env:{
-          ...process.env
-        }
       });
     } catch (error) {
       console.error(`Error publishing ${dirPath}: ${error.message}`);
