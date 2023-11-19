@@ -12,6 +12,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@homy/gito-core-darwin-arm64@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@homy/gito-core-darwin-arm64@npm:1.0.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@homy/gito-core-darwin-x64@npm:1.0.0":
   version: 1.0.0
   resolution: "@homy/gito-core-darwin-x64@npm:1.0.0"
@@ -37,12 +44,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@homy/gito-core@workspace:."
   dependencies:
+    "@homy/gito-core-darwin-arm64": 1.0.0
     "@homy/gito-core-darwin-x64": 1.0.0
     "@homy/gito-core-linux-x64-gnu": 1.0.0
     "@homy/gito-core-win32-x64-msvc": 1.0.0
-    "@napi-rs/cli": ^2.15.2
+    "@napi-rs/cli": latest
     ava: ^5.1.1
   dependenciesMeta:
+    "@homy/gito-core-darwin-arm64":
+      optional: true
     "@homy/gito-core-darwin-x64":
       optional: true
     "@homy/gito-core-linux-x64-gnu":
@@ -52,12 +62,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@napi-rs/cli@npm:^2.15.2":
-  version: 2.15.2
-  resolution: "@napi-rs/cli@npm:2.15.2"
+"@napi-rs/cli@npm:latest":
+  version: 2.16.5
+  resolution: "@napi-rs/cli@npm:2.16.5"
   bin:
     napi: scripts/index.js
-  checksum: dedcbd339f634e4a4c442febbfaee7c0fd907f3b8082c1f3ddba18b0e02ae2f0e4bff75688763669db5fb1a0f5ab26a7200cb6c01fe8825effd0a70a44bcbbc7
+  checksum: 8d6583572638c8b9c7b6df440d4627958cc877e6b7bb5ebda58ae74b70aa3ce72b2054c8d6ecc7ba15a2710bb6f14a90f5ee75852fa234e1392760ecf36d4ae7
   languageName: node
   linkType: hard
 

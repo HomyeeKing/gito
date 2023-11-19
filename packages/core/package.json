@@ -17,7 +17,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@napi-rs/cli": "^2.15.2",
+    "@napi-rs/cli": "latest",
     "ava": "^5.1.1"
   },
   "ava": {
@@ -32,7 +32,7 @@
   },
   "scripts": {
     "artifacts": "napi artifacts",
-    "build": "napi build --platform --release",
+    "build": "napi build --platform --release  --js-package-name @homy/gito-core",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
     "publish:all": "node publish-all.js",
