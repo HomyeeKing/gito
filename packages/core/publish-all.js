@@ -15,6 +15,9 @@ fs.readdirSync(rootDir, { withFileTypes: true })
       execSync(`npm publish ${isPre ? '--tag beta' : ''} --access public`, {
         cwd: dirPath,
         stdio: 'inherit',
+        env:{
+          ...process.env
+        }
       });
     } catch (error) {
       console.error(`Error publishing ${dirPath}: ${error.message}`);
