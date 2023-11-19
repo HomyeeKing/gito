@@ -13,7 +13,7 @@ categories = ["development-tools"]
 
 [lib]
 # https://github.com/rust-lang/cargo/issues/12653#issuecomment-1713253593
-crate-type = ["cdylib", "rlib"]
+crate-type = ["cdylib","rlib"]
 
 [dependencies]
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
@@ -24,5 +24,4 @@ napi-derive = "2.12.2"
 [build-dependencies]
 napi-build = "2.0.1"
 
-[profile.release]
-lto = true
+

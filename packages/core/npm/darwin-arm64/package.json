@@ -1,6 +1,6 @@
 {
   "name": "@homy/gito-core-darwin-arm64",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "os": [
     "darwin"
   ],

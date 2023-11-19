@@ -11,6 +11,10 @@
       ]
     }
   },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@napi-rs/cli": "^2.15.2",
@@ -21,6 +25,10 @@
   },
   "engines": {
     "node": ">= 10"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "scripts": {
     "artifacts": "napi artifacts",
@@ -34,9 +42,10 @@
   },
   "packageManager": "yarn@3.5.1",
   "optionalDependencies": {
+    "@homy/gito-core-win32-x64-msvc": "1.0.0",
     "@homy/gito-core-darwin-x64": "1.0.0",
     "@homy/gito-core-linux-x64-gnu": "1.0.0",
-    "@homy/gito-core-win32-x64-msvc": "1.0.0"
+    "@homy/gito-core-darwin-arm64": "1.0.0"
   },
   "repository": "git@github.com:HomyeeKing/gito.git"
 }
