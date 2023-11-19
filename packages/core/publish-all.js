@@ -3,15 +3,19 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const rootDir = path.join(__dirname, 'npm');
+const args = process.argv.slice(2);
 
 fs.readdirSync(rootDir, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .forEach((dirent) => {
+    const isPre = args.includes('--pre');
     const dirPath = `${rootDir}/${dirent.name}`;
     console.log(`Publishing ${dirPath}...`);
     try {
       execSync(
-        'npm publish --access public --registry https://registry.npmjs.org/',
+        `npm publish --access ${
+          isPre ? '--tag beta' : ''
+        } public --registry https://registry.npmjs.org/`,
         { cwd: dirPath, stdio: 'inherit' }
       );
     } catch (error) {

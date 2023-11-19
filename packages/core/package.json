@@ -35,17 +35,18 @@
     "build": "napi build --platform --release  --js-package-name @homy/gito-core",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
-    "publish:all": "node publish-all.js",
+    "publish:allPre": "node publish-all.js --pre",
+    "publish:allProd": "node publish-all.js --prod",
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
   },
   "packageManager": "yarn@3.5.1",
   "optionalDependencies": {
-    "@homy/gito-core-win32-x64-msvc": "1.0.1-beta.0",
-    "@homy/gito-core-darwin-x64": "1.0.1-beta.0",
-    "@homy/gito-core-linux-x64-gnu": "1.0.1-beta.0",
-    "@homy/gito-core-darwin-arm64": "1.0.1-beta.0"
+    "@homy/gito-core-win32-x64-msvc": "1.0.1-beta.1",
+    "@homy/gito-core-darwin-x64": "1.0.1-beta.1",
+    "@homy/gito-core-linux-x64-gnu": "1.0.1-beta.1",
+    "@homy/gito-core-darwin-arm64": "1.0.1-beta.1"
   },
   "repository": "git@github.com:HomyeeKing/gito.git"
 }
