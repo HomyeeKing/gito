@@ -1,6 +1,6 @@
 [package]
 name = "gito_core"
-version = "1.0.3"
+version = "1.0.4"
 description = "offering tiny easy-use api about git info"
 edition.workspace = true
 authors.workspace = true

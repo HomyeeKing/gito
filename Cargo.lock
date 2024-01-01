@@ -439,7 +439,7 @@ dependencies = [
 
 [[package]]
 name = "gito_core"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "napi",
  "napi-build",
