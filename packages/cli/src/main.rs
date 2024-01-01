@@ -44,15 +44,14 @@ struct BranchArgs {
 
 #[derive(Debug, Subcommand)]
 enum BranchCmd {
-    #[command(about = "delete local/remote/both branch", alias = "del")]
+    #[command(
+        about = "delete both local and remote branch by default",
+        alias = "del"
+    )]
     Delete {
         branch_name: String,
-        #[arg(long = "local", default_value = "true", short = 'l')]
-        local: bool,
-        #[arg(long = "remote", short = 'r')]
-        remote: bool,
-        #[arg(long = "both")]
-        both: bool,
+        #[arg(default_value = "false", short = 'D')]
+        force_delete: bool,
     },
 }
 
@@ -117,10 +116,8 @@ async fn main() {
         Commands::Branch(branch) => match branch.command {
             BranchCmd::Delete {
                 branch_name,
-                local,
-                remote,
-                both,
-            } => branch_command::delete::run(&branch_name, local, remote, both),
+                force_delete,
+            } => branch_command::delete::run(&branch_name, force_delete),
         },
     }
 }
