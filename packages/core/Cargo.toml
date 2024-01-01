@@ -24,4 +24,7 @@ napi-derive = "2.12.2"
 [build-dependencies]
 napi-build = "2.0.1"
 
+[features]
+independent = ["napi-derive/noop"]
+
 
