@@ -70,3 +70,11 @@ git init with specific user info by alias
 ```bash
 gito init github
 ```
+
+## branch
+
+some branch action
+
+```bash
+gito branch delete <branch_name> # delete branch both locally and remotely
+```
