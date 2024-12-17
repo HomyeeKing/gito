@@ -9,7 +9,7 @@ extern crate serde_json;
 
 pub async fn run(name: &str, git_info: &GitInfo) {
     // detect whether given upstream name exists
-    let upstream_url = get_stdout(&run_git(vec!["remote", "get-url", name]));
+    let upstream_url = get_stdout(&run_git(vec!["remote", "get-url", name])).unwrap_or_default();
     if upstream_url.trim().len() > 0 {
         eprintln!("`{name}` has existed, please check or input a new name");
     } else {

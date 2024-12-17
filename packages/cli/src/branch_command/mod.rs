@@ -8,9 +8,9 @@ pub mod delete {
             if force_delete { "-D" } else { "-d" },
             branch_name,
         ]);
-        println!("{}", get_stdout(&output));
+        println!("{}", get_stdout(&output).unwrap());
         
         let output = run_git(vec!["push", "--delete", "origin", branch_name]);
-        println!("delete remote branch successfully! {}", get_stdout(&output));
+        println!("delete remote branch successfully! {}", get_stdout(&output).unwrap());
     }
 }

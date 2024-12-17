@@ -14,10 +14,10 @@ pub struct GitInfo {
 
 #[napi]
 pub fn get_git_info() -> GitInfo {
-  let ssh_url = get_stdout(&run_git(vec!["config", "remote.origin.url"]));
-  let username = get_stdout(&run_git(vec!["config", "user.name"]));
-  let email = get_stdout(&run_git(vec!["config", "user.email"]));
-  let current_branch = get_stdout(&run_git(vec!["rev-parse", "--abbrev-ref", "HEAD"]));
+  let ssh_url = get_stdout(&run_git(vec!["config", "remote.origin.url"])).unwrap();
+  let username = get_stdout(&run_git(vec!["config", "user.name"])).unwrap();
+  let email = get_stdout(&run_git(vec!["config", "user.email"])).unwrap();
+  let current_branch = get_stdout(&run_git(vec!["rev-parse", "--abbrev-ref", "HEAD"])).unwrap();
 
   GitInfo {
     user_repo: get_user_repo(&ssh_url),

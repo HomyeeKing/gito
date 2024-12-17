@@ -19,8 +19,8 @@ tokio = { version = "1", features = ["full"] }
 regex = "1"
 serde_json = "1.0.91"
 colored = "2.0.0"
-# gito_core = { path = "../core", version = "1.0.3", features = ["independent"] }
-gito_core = { version = "1.0.4", features = ["independent"] }
+gito_core = { path = "../core", version = "1.0.4", features = ["independent"] }
+# gito_core = { version = "1.0.4", features = ["independent"] }
 rust-ini = "0.18.0"
 home = "0.5.4"
 prettytable = "0.10.0"

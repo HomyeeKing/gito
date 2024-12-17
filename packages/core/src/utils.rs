@@ -7,14 +7,13 @@ use regex::Regex;
  * return stdout when success
  * or return stderr
  */
-pub fn get_stdout(output: &Output) -> String {
-  return (String::from_utf8_lossy(if output.status.success() {
-    &output.stdout
+pub fn get_stdout(output: &Output) -> Option<String> {
+  if output.status.success() {
+    Some(String::from_utf8_lossy(&output.stdout).trim().to_string())
   } else {
-    &output.stderr
-  }))
-  .trim()
-  .to_string();
+    eprintln!("Command failed: {}", String::from_utf8_lossy(&output.stderr).trim().to_string());
+    None
+  }
 }
 
 /**
