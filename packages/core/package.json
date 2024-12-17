@@ -1,6 +1,6 @@
 {
   "name": "@homy/gito-core",
-  "version": "1.0.1-beta.1",
+  "version": "1.0.4",
   "main": "index.js",
   "types": "index.d.ts",
   "napi": {
