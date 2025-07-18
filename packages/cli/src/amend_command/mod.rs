@@ -2,7 +2,7 @@ use crate::utils::*;
 use gito_core::utils::run_git;
 
 pub fn run(alias: &str) {
-    let git_accounts = safe_get_git_account();
+    let git_accounts = safe_get_gito_config("account");
     if git_accounts.section(Some(alias)).is_some() {
         let account = git_accounts.section(Some(alias)).unwrap();
         let git_name = account.get("name").unwrap_or_default();

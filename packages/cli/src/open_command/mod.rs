@@ -2,38 +2,33 @@
 pub mod add {
     use crate::utils::{get_config_path, safe_get_gito_config};
 
-    pub fn run(alias: &str, name: &str, email: &str) {
-        let mut config = safe_get_gito_config("account");
-        config.set_to(Some(alias), "name".to_string(), name.to_string());
-        config.set_to(Some(alias), "email".to_string(), email.to_string());
-        config
-            .write_to_file(get_config_path("account"))
-            .unwrap();
-        println!("Add {alias} successfully");
+    pub fn run(alias: &str, base_url: &str) {
+        let mut config = safe_get_gito_config("open");
+        config.set_to(Some(alias), "base_url".to_string(), base_url.to_string());
+        config.write_to_file(get_config_path("open")).unwrap();
+        println!("Add {alias} {base_url} successfully");
     }
 }
 pub mod del {
     use crate::utils::{get_config_path, safe_get_gito_config};
-
     pub fn run(alias: &str) {
-        let mut config = safe_get_gito_config("account");
+        let mut config = safe_get_gito_config("open");
         config.delete(Some(alias));
-        config
-            .write_to_file(get_config_path("account"))
-            .unwrap();
+        config.write_to_file(get_config_path("open")).unwrap();
         println!("Delete {alias} successfully");
     }
 }
 
 pub mod list {
-    use crate::utils::safe_get_gito_config;
     use gito_core::GitInfo;
     use prettytable::{color, row, Attr, Cell, Row, Table};
     use std::vec;
+
+    use crate::utils::safe_get_gito_config;
     pub fn run(git_info: &GitInfo) {
         let mut git_account_table = Table::new();
-        git_account_table.add_row(row!["alias", "name", "email"]);
-        let i = safe_get_gito_config("account");
+        git_account_table.add_row(row!["alias", "base_url"]);
+        let i = safe_get_gito_config("open");
         for (sec, prop) in i.iter() {
             let mut group: Vec<Cell> = vec![];
             group.push(Cell::new(sec.unwrap_or_default()));
@@ -52,7 +47,7 @@ pub mod list {
     }
 }
 
-pub mod use_user {
+pub mod use_website {
     use crate::utils::*;
     use gito_core::utils::run_git;
 

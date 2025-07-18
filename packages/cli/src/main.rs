@@ -1,10 +1,10 @@
-mod constants;
 mod utils;
 //  command
 mod amend_command;
 mod branch_command;
 mod get_upstream;
 mod init_command;
+mod open_command;
 mod user_command;
 // extern
 use clap::{Args, Parser, Subcommand};
@@ -27,6 +27,8 @@ enum Commands {
     },
     #[command(about = "git account management")]
     User(UserArgs),
+    #[command(about = "open websites related to current git repository")]
+    Open(OpenArgs),
     #[command(about = "amend the commit's author and email by alias")]
     Amend { alias: String },
     #[command(about = "git init with specific user info by alias")]
@@ -61,6 +63,7 @@ struct UserArgs {
     #[command(subcommand)]
     command: UserCmd,
 }
+
 #[derive(Debug, Subcommand)]
 enum UserCmd {
     #[command(about = "list all git users", alias = "ls")]
@@ -91,9 +94,40 @@ enum UserCmd {
         alias: String,
     },
 }
+#[derive(Debug, Args)]
+#[command(args_conflicts_with_subcommands = true)]
+struct OpenArgs {
+    #[command(subcommand)]
+    command: OpenCmd,
+}
+
+#[derive(Debug, Subcommand)]
+enum OpenCmd {
+    #[command(about = "list all registered websites", alias = "ls")]
+    List,
+    #[command(about = "add target website")]
+    Add {
+        /// alias for this website
+        alias: String,
+        /// the base url of the website
+        base_url: String,
+    },
+    #[command(about = "delete website by alias")]
+    Del {
+        /// alias for this account
+        alias: String,
+    },
+}
 
 #[tokio::main]
 async fn main() {
+    // Initialize gito config files
+    if let Err(e) = utils::init_gito_config() {
+        eprintln!("Error initializing gito config: {}", e);
+        // Decide how to handle this error. For now, we'll just print and continue.
+        // You might want to exit or take other corrective actions.
+    }
+
     let git_info = get_git_info();
     let args = Cli::parse();
 
@@ -110,6 +144,15 @@ async fn main() {
             }
             UserCmd::Use { alias, global } => user_command::use_user::run(&alias, global),
             UserCmd::Del { alias } => user_command::del::run(&alias),
+        },
+        Commands::Open(open) => match open.command {
+            OpenCmd::List => {
+                open_command::list::run(&git_info);
+            }
+            OpenCmd::Add { alias, base_url } => {
+                open_command::add::run(&alias, &base_url);
+            }
+            OpenCmd::Del { alias } => open_command::del::run(&alias),
         },
         Commands::Amend { alias } => amend_command::run(&alias),
         Commands::Init { alias } => init_command::run(&alias),
