@@ -93,13 +93,22 @@ pub mod open_website {
         }
 
         if let Some(mut base_url) = base_url_found {
-            // Ensure base_url ends with a slash
-            if !base_url.ends_with('/') {
-                base_url.push('/');
-            }
+            let url: String;
+            if base_url.contains("<group>") || base_url.contains("<name>") {
+                let parts: Vec<&str> = git_info.user_repo.split('/').collect();
+                let group = parts.get(0).unwrap_or(&"");
+                let name = parts.get(1).unwrap_or(&"");
 
-            // Construct the full URL using git_info
-            let url = format!("{}{}", base_url, git_info.user_repo);
+                url = base_url
+                    .replace("<group>", group)
+                    .replace("<name>", name);
+            } else {
+                // Ensure base_url ends with a slash if no placeholders are used
+                if !base_url.ends_with('/') {
+                    base_url.push('/');
+                }
+                url = format!("{}{}", base_url, git_info.user_repo);
+            }
             
             #[cfg(target_os = "macos")]
             let output = run_command("open", vec![&url]);
