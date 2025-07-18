@@ -6,9 +6,7 @@ pub mod add {
         let mut config = safe_get_gito_config("account");
         config.set_to(Some(alias), "name".to_string(), name.to_string());
         config.set_to(Some(alias), "email".to_string(), email.to_string());
-        config
-            .write_to_file(get_config_path("account"))
-            .unwrap();
+        config.write_to_file(get_config_path("account")).unwrap();
         println!("Add {alias} successfully");
     }
 }
@@ -18,19 +16,17 @@ pub mod del {
     pub fn run(alias: &str) {
         let mut config = safe_get_gito_config("account");
         config.delete(Some(alias));
-        config
-            .write_to_file(get_config_path("account"))
-            .unwrap();
+        config.write_to_file(get_config_path("account")).unwrap();
         println!("Delete {alias} successfully");
     }
 }
 
 pub mod list {
     use crate::utils::safe_get_gito_config;
-    use gito_core::GitInfo;
+    use gito_core::GitConfig;
     use prettytable::{color, row, Attr, Cell, Row, Table};
     use std::vec;
-    pub fn run(git_info: &GitInfo) {
+    pub fn run(git_user_info: &GitConfig) {
         let mut git_account_table = Table::new();
         git_account_table.add_row(row!["alias", "name", "email"]);
         let i = safe_get_gito_config("account");
@@ -41,7 +37,7 @@ pub mod list {
                 group.push(Cell::new(v));
             }
 
-            if group[1].get_content() == git_info.username {
+            if group[1].get_content() == git_user_info.username {
                 for cell in group.iter_mut() {
                     cell.style(Attr::ForegroundColor(color::GREEN))
                 }

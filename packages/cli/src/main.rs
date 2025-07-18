@@ -1,6 +1,6 @@
-mod utils;
-mod constants; // Add this line
-//  command
+mod constants;
+mod utils; // Add this line
+           //  command
 mod amend_command;
 mod branch_command;
 mod get_upstream;
@@ -9,7 +9,7 @@ mod open_command;
 mod user_command;
 // extern
 use clap::{Args, Parser, Subcommand};
-use gito_core::get_git_info;
+use gito_core::{get_git_info, get_git_user};
 
 #[derive(Parser)]
 #[command(name = "gito")]
@@ -130,16 +130,17 @@ async fn main() {
         // You might want to exit or take other corrective actions.
     }
 
-    let git_info = get_git_info();
+    let git_user_info = get_git_user();
     let args = Cli::parse();
 
     match args.command {
         Commands::GetUpstream { remote_name } => {
+            let git_info = get_git_info();
             get_upstream::run(&remote_name, &git_info).await;
         }
         Commands::User(user) => match user.command {
             UserCmd::List => {
-                user_command::list::run(&git_info);
+                user_command::list::run(&git_user_info);
             }
             UserCmd::Add { alias, name, email } => {
                 user_command::add::run(&alias, &name, &email);
@@ -147,24 +148,23 @@ async fn main() {
             UserCmd::Use { alias, global } => user_command::use_user::run(&alias, global),
             UserCmd::Del { alias } => user_command::del::run(&alias),
         },
-        Commands::Open(open) => {
-            match open.command {
-                Some(OpenCmd::List) => {
-                    open_command::list::run(&git_info);
-                }
-                Some(OpenCmd::Add { alias, base_url }) => {
-                    open_command::add::run(&alias, &base_url);
-                }
-                Some(OpenCmd::Del { alias }) => open_command::del::run(&alias),
-                None => {
-                    if let Some(alias) = open.alias {
-                        open_command::open_website::run(&alias, &git_info);
-                    } else {
-                        eprintln!("Please provide an alias or a subcommand for 'open'.");
-                    }
+        Commands::Open(open) => match open.command {
+            Some(OpenCmd::List) => {
+                open_command::list::run();
+            }
+            Some(OpenCmd::Add { alias, base_url }) => {
+                open_command::add::run(&alias, &base_url);
+            }
+            Some(OpenCmd::Del { alias }) => open_command::del::run(&alias),
+            None => {
+                if let Some(alias) = open.alias {
+                    let git_info = get_git_info();
+                    open_command::open_website::run(&alias, &git_info);
+                } else {
+                    eprintln!("Please provide an alias or a subcommand for 'open'.");
                 }
             }
-        }
+        },
         Commands::Amend { alias } => amend_command::run(&alias),
         Commands::Init { alias } => init_command::run(&alias),
         Commands::Branch(branch) => match branch.command {

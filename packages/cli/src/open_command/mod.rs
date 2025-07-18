@@ -20,15 +20,14 @@ pub mod del {
 }
 
 pub mod list {
-    use gito_core::GitInfo;
-    use prettytable::{color, row, Attr, Cell, Row, Table};
-    use std::vec;
-    use std::collections::HashSet; // Add this line
+    use prettytable::{row, Cell, Row, Table};
+    use std::collections::HashSet;
+    use std::vec; // Add this line
 
     use crate::constants::DEFAULT_OPEN_CONFIG; // Add this line
 
     use crate::utils::safe_get_gito_config;
-    pub fn run(git_info: &GitInfo) {
+    pub fn run() {
         let mut git_account_table = Table::new();
         git_account_table.add_row(row!["alias", "base_url"]);
 
@@ -39,16 +38,10 @@ pub mod list {
         for (sec, prop) in user_config.iter() {
             let alias = sec.unwrap_or_default();
             let base_url = prop.get("base_url").unwrap_or_default();
-            
+
             let mut group: Vec<Cell> = vec![];
             group.push(Cell::new(alias));
             group.push(Cell::new(base_url));
-
-            if base_url == git_info.username { // Assuming git_info.username is used for highlighting
-                for cell in group.iter_mut() {
-                    cell.style(Attr::ForegroundColor(color::GREEN));
-                }
-            }
             git_account_table.add_row(Row::new(group));
             listed_aliases.insert(alias.to_string());
         }
@@ -63,22 +56,25 @@ pub mod list {
                 git_account_table.add_row(Row::new(group));
             }
         }
-        
+
         git_account_table.printstd();
     }
 }
 
 pub mod open_website {
+    use crate::constants::DEFAULT_OPEN_CONFIG;
     use crate::utils::*;
     use gito_core::{utils::run_command, GitInfo}; // Changed run_git to run_command
-    use crate::constants::DEFAULT_OPEN_CONFIG;
 
     pub fn run(alias: &str, git_info: &GitInfo) {
         let open_config = safe_get_gito_config("open");
         let mut base_url_found = None;
 
         // First, check user-defined configurations
-        if let Some(base_url) = open_config.section(Some(alias)).and_then(|section| section.get("base_url")) {
+        if let Some(base_url) = open_config
+            .section(Some(alias))
+            .and_then(|section| section.get("base_url"))
+        {
             base_url_found = Some(base_url.to_string());
         }
 
@@ -99,9 +95,7 @@ pub mod open_website {
                 let group = parts.get(0).unwrap_or(&"");
                 let name = parts.get(1).unwrap_or(&"");
 
-                url = base_url
-                    .replace("<group>", group)
-                    .replace("<name>", name);
+                url = base_url.replace("<group>", group).replace("<name>", name);
             } else {
                 // Ensure base_url ends with a slash if no placeholders are used
                 if !base_url.ends_with('/') {
@@ -109,7 +103,7 @@ pub mod open_website {
                 }
                 url = format!("{}{}", base_url, git_info.user_repo);
             }
-            
+
             #[cfg(target_os = "macos")]
             let output = run_command("open", vec![&url]);
             #[cfg(target_os = "linux")]
@@ -118,7 +112,10 @@ pub mod open_website {
             let output = run_command("start", vec!["", &url]); // "start" often needs an empty first arg for title
 
             if !output.status.success() {
-                eprintln!("Failed to open URL: {}", String::from_utf8_lossy(&output.stderr));
+                eprintln!(
+                    "Failed to open URL: {}",
+                    String::from_utf8_lossy(&output.stderr)
+                );
             } else {
                 println!("Opening: {}", url);
             }
