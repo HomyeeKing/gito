@@ -1,6 +1,6 @@
 [package]
 name = "gito"
-version = "0.2.11"
+version = "0.2.12"
 description = "A tool to expand the ability of git"
 categories = ["command-line-utilities"]
 edition.workspace = true

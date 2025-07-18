@@ -415,11 +415,11 @@ checksum = "4271d37baee1b8c7e4b708028c57d816cf9d2434acb33a549475f78c181f6253"
 
 [[package]]
 name = "gito"
-version = "0.2.11"
+version = "0.2.12"
 dependencies = [
  "clap",
  "colored",
- "gito_core 1.0.7",
+ "gito_core 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "home",
  "prettytable",
  "regex",
@@ -431,9 +431,7 @@ dependencies = [
 
 [[package]]
 name = "gito_core"
-version = "1.0.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3025a7757cde84eb739ff6beb8d6f8d170e5dbfde8878b53f4544974a215e382"
+version = "1.0.8"
 dependencies = [
  "napi",
  "napi-build",
@@ -444,6 +442,8 @@ dependencies = [
 [[package]]
 name = "gito_core"
 version = "1.0.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "951f67a99230d896409b29f6c9e5832df79797347c34aaf98b80f6a1f22cd825"
 dependencies = [
  "napi",
  "napi-build",
