@@ -2,6 +2,7 @@ use std::path::PathBuf;
 
 use ini::Ini;
 use std::fs;
+// Removed: use crate::constants::DEFAULT_OPEN_CONFIG;
 
 pub fn get_home_dir() -> PathBuf {
     match home::home_dir() {
@@ -46,7 +47,8 @@ pub fn init_gito_config() -> Result<(), String> {
     }
 
     if !open_file.exists() {
-        fs::File::create(&open_file).map_err(|e| format!("Failed to create open file: {}", e))?;
+        fs::File::create(&open_file)
+            .map_err(|e| format!("Failed to create open file: {}", e))?;
     }
 
     Ok(())

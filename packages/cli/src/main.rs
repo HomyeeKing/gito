@@ -1,4 +1,5 @@
 mod utils;
+mod constants; // Add this line
 //  command
 mod amend_command;
 mod branch_command;
@@ -95,10 +96,11 @@ enum UserCmd {
     },
 }
 #[derive(Debug, Args)]
-#[command(args_conflicts_with_subcommands = true)]
 struct OpenArgs {
+    #[arg(help = "alias of the website to open")]
+    alias: Option<String>,
     #[command(subcommand)]
-    command: OpenCmd,
+    command: Option<OpenCmd>,
 }
 
 #[derive(Debug, Subcommand)]
@@ -145,15 +147,24 @@ async fn main() {
             UserCmd::Use { alias, global } => user_command::use_user::run(&alias, global),
             UserCmd::Del { alias } => user_command::del::run(&alias),
         },
-        Commands::Open(open) => match open.command {
-            OpenCmd::List => {
-                open_command::list::run(&git_info);
+        Commands::Open(open) => {
+            match open.command {
+                Some(OpenCmd::List) => {
+                    open_command::list::run(&git_info);
+                }
+                Some(OpenCmd::Add { alias, base_url }) => {
+                    open_command::add::run(&alias, &base_url);
+                }
+                Some(OpenCmd::Del { alias }) => open_command::del::run(&alias),
+                None => {
+                    if let Some(alias) = open.alias {
+                        open_command::open_website::run(&alias, &git_info);
+                    } else {
+                        eprintln!("Please provide an alias or a subcommand for 'open'.");
+                    }
+                }
             }
-            OpenCmd::Add { alias, base_url } => {
-                open_command::add::run(&alias, &base_url);
-            }
-            OpenCmd::Del { alias } => open_command::del::run(&alias),
-        },
+        }
         Commands::Amend { alias } => amend_command::run(&alias),
         Commands::Init { alias } => init_command::run(&alias),
         Commands::Branch(branch) => match branch.command {

@@ -23,50 +23,93 @@ pub mod list {
     use gito_core::GitInfo;
     use prettytable::{color, row, Attr, Cell, Row, Table};
     use std::vec;
+    use std::collections::HashSet; // Add this line
+
+    use crate::constants::DEFAULT_OPEN_CONFIG; // Add this line
 
     use crate::utils::safe_get_gito_config;
     pub fn run(git_info: &GitInfo) {
         let mut git_account_table = Table::new();
         git_account_table.add_row(row!["alias", "base_url"]);
-        let i = safe_get_gito_config("open");
-        for (sec, prop) in i.iter() {
-            let mut group: Vec<Cell> = vec![];
-            group.push(Cell::new(sec.unwrap_or_default()));
-            for (_, v) in prop.iter() {
-                group.push(Cell::new(v));
-            }
 
-            if group[1].get_content() == git_info.username {
+        let mut listed_aliases = HashSet::new();
+
+        // List configurations from .gito/open
+        let user_config = safe_get_gito_config("open");
+        for (sec, prop) in user_config.iter() {
+            let alias = sec.unwrap_or_default();
+            let base_url = prop.get("base_url").unwrap_or_default();
+            
+            let mut group: Vec<Cell> = vec![];
+            group.push(Cell::new(alias));
+            group.push(Cell::new(base_url));
+
+            if base_url == git_info.username { // Assuming git_info.username is used for highlighting
                 for cell in group.iter_mut() {
-                    cell.style(Attr::ForegroundColor(color::GREEN))
+                    cell.style(Attr::ForegroundColor(color::GREEN));
                 }
             }
             git_account_table.add_row(Row::new(group));
+            listed_aliases.insert(alias.to_string());
         }
+
+        // List default configurations, avoiding duplicates
+        for (alias, url) in DEFAULT_OPEN_CONFIG.iter() {
+            if !listed_aliases.contains(*alias) {
+                let mut group: Vec<Cell> = vec![];
+                group.push(Cell::new(alias));
+                group.push(Cell::new(url));
+
+                git_account_table.add_row(Row::new(group));
+            }
+        }
+        
         git_account_table.printstd();
     }
 }
 
-pub mod use_website {
+pub mod open_website {
     use crate::utils::*;
-    use gito_core::utils::run_git;
+    use gito_core::{utils::run_command, GitInfo}; // Changed run_git to run_command
+    use crate::constants::DEFAULT_OPEN_CONFIG;
 
-    pub fn run(alias: &str, is_global: bool) {
-        let git_accounts = safe_get_gito_config("account");
-        if git_accounts.section(Some(alias)).is_some() {
-            let account = git_accounts.section(Some(alias)).unwrap();
-            let git_name = account.get("name").unwrap_or_default();
-            let git_email = account.get("email").unwrap_or_default();
+    pub fn run(alias: &str, git_info: &GitInfo) {
+        let open_config = safe_get_gito_config("open");
+        let mut base_url_found = None;
 
-            run_git(vec!["config", "--local", "user.name", git_name]);
-            run_git(vec!["config", "--local", "user.email", git_email]);
-            if is_global {
-                run_git(vec!["config", "--global", "user.name", git_name]);
-                run_git(vec!["config", "--global", "user.email", git_email]);
+        // First, check user-defined configurations
+        if let Some(base_url) = open_config.section(Some(alias)).and_then(|section| section.get("base_url")) {
+            base_url_found = Some(base_url.to_string());
+        }
+
+        // If not found, check default configurations
+        if base_url_found.is_none() {
+            for (default_alias, default_url) in DEFAULT_OPEN_CONFIG.iter() {
+                if default_alias == &alias {
+                    base_url_found = Some(default_url.to_string());
+                    break;
+                }
             }
-            println!("git account now is {} {}", git_name, git_email);
+        }
+
+        if let Some(mut base_url) = base_url_found {
+            // Ensure base_url ends with a slash
+            if !base_url.ends_with('/') {
+                base_url.push('/');
+            }
+
+            // Construct the full URL using git_info
+            let url = format!("{}{}", base_url, git_info.user_repo);
+            
+            #[cfg(target_os = "macos")]
+            run_command("open", vec![&url]); // Use run_command
+            #[cfg(target_os = "linux")]
+            run_command("xdg-open", vec![&url]); // Use run_command
+            #[cfg(target_os = "windows")]
+            run_command("start", vec!["", &url]); // Use run_command, "start" often needs an empty first arg
+            println!("Opening: {}", url);
         } else {
-            println!("Invalid alias");
+            eprintln!("No base URL found for alias: {}", alias);
         }
     }
 }
