@@ -48,6 +48,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: packages/core/package-lock.json
       - name: Install
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -85,6 +86,7 @@ jobs:
       - name: Build
         run: ${{ matrix.settings.build }}
         shell: bash
+        working-directory: packages/core
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -122,6 +124,7 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
           architecture: ${{ matrix.settings.architecture }}
+          cache-dependency-path: packages/core/package-lock.json
       - name: Install dependencies
         run: npm install
         working-directory: packages/core
@@ -135,6 +138,7 @@ jobs:
         shell: bash
       - name: Test bindings
         run: npm test
+        working-directory: packages/core
   publish:
     name: Publish
     runs-on: ubuntu-latest
