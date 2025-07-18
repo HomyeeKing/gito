@@ -1,9 +1,6 @@
 {
   "name": "@homy/gito-core-darwin-arm64",
   "version": "1.0.5",
-  "os": [
-    "darwin"
-  ],
   "cpu": [
     "arm64"
   ],
@@ -15,5 +12,12 @@
   "engines": {
     "node": ">= 10"
   },
-  "repository": "git@github.com:HomyeeKing/gito.git"
+  "repository": "git@github.com:HomyeeKing/gito.git",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "os": [
+    "darwin"
+  ]
 }
