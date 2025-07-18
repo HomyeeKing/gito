@@ -12,22 +12,22 @@ A CLI to expand the ability of `git`.
 
 > alias: gup
 
-Get the parent repo ssh url based on github relationship if there is and set it as `upstream` remote.
+get the parent repo ssh url based on github relationship if there is and set it as `upstream` remote
 
-For more details, run `gito get-upstream -h`.
+```bash
+gito gup --remote-name [name] # default is `upstream`
+gito gup # equals to `gito gup --remote-name upstream`
+```
 
 ![gito gup](https://user-images.githubusercontent.com/49113249/231788513-3a51e36f-801f-405d-b0dd-763cef906297.gif)
 
 ## user
 
-Manage git user accounts. It's very useful when you have multiple git accounts (e.g., work and personal).
+manage git user.
 
-For more details, run `gito user -h`.
+it's very useful when you have a few git accounts, like one is work account and one is github account.
 
-## amend
-
-Amend the commit's author and email by alias. Useful when you forget to change accounts.
-
+there're some sub-commands inspired by [nrm](https://github.com/Pana/nrm), you can see the detail by running `gito user -h`.
 
 Here we give some example
 
@@ -74,9 +74,13 @@ gito init github
 
 ## open
 
-Open websites related to the current git repository. This command allows you to quickly open predefined or custom URLs in your browser, automatically appending the current repository's `username/repo` path.
+Open websites related to the current git repository. This command allows you to quickly open predefined or custom URLs in your browser.
 
-You can define custom websites using `gito open add`. There is also a default `deepwiki` configuration.
+The `base_url` can now include placeholders:
+- `<group>`: Replaced by the first part of `group/name`
+- `<name>`: Replaced by the second part of `group/name`
+
+If no placeholders are used, the command will automatically append the current repository's `group/name` path to the `base_url`.
 
 ### Subcommands
 
@@ -93,7 +97,20 @@ Open a website using an alias:
 gito open deepwiki 
 ```
 
-Add a custom website:
+Add a custom website with placeholders:
+
+```bash
+gito open add github_issues https://github.com/<group>/<name>/issues
+```
+
+Then open it:
+
+```bash
+# If current repo is foo/bar, opens https://github.com/foo/bar/issues
+gito open github_issues
+```
+
+Add a custom website without placeholders:
 
 ```bash
 gito open add myjira https://jira.mycompany.com/browse/
