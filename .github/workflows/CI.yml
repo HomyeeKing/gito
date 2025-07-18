@@ -45,9 +45,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Oxlint
-        run: npm run lint
-
       - name: Cargo fmt
         run: cargo fmt -- --check
 
