@@ -19,6 +19,12 @@ cargo publish -p gito
 ```
 
 ## core npm
+### publish by CI
+This way publish pakcages by git commit message with github CI, for example:
+- git message is `1.0.0`, then the CI will publish the 1.0.0 with the `latest` tag
+- if the git message is `1.0.0-beta.0`, then this version will be publish with tag `beta`
+
+### maunal steps
 we use napi-rs to build js version of core, if you need to update it, please follow the steps below
 ```bash
 npm run build
