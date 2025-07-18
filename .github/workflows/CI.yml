@@ -49,6 +49,7 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: packages/core/package-lock.json
+        working-directory: packages/core
       - name: Install
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -107,6 +108,8 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: packages/core/package-lock.json
+        working-directory: packages/core
       - name: Install dependencies
         run: npm install
         working-directory: packages/core
