@@ -12,37 +12,38 @@ A CLI to expand the ability of `git`.
 
 > alias: gup
 
-get the parent repo ssh url based on github relationship if there is and set it as `upstream` remote
+Get the parent repo ssh url based on github relationship if there is and set it as `upstream` remote.
 
-```bash
-gito gup --remote-name [name] # default is `upstream`
-```
+For more details, run `gito get-upstream -h`.
 
 ![gito gup](https://user-images.githubusercontent.com/49113249/231788513-3a51e36f-801f-405d-b0dd-763cef906297.gif)
 
 ## user
 
-manage git user.
+Manage git user accounts. It's very useful when you have multiple git accounts (e.g., work and personal).
 
-it's very useful when you have a few git accounts, like one is work account and one is github account.
+For more details, run `gito user -h`.
 
-there're some sub-commands inspired by [nrm](https://github.com/Pana/nrm), you can see the detail by running `gito user -h`.
+## amend
+
+Amend the commit's author and email by alias. Useful when you forget to change accounts.
+
 
 Here we give some example
 
 ```bash
-gito user add github HomyeeKing HomyeeKing@gmail.com
+gito user add github foo foo@example.com
 gito user ls
 ```
 
 you will see an output like
 
 ```
-+--------+------------+----------------------+
-| alias  | name       | email                |
-+--------+------------+----------------------+
-| github | HomyeeKing | HomyeeKing@gmail.com |
-+--------+------------+----------------------+
++--------+-------+-----------------+
+| alias  | name  | email           |
++--------+-------+-----------------+
+| github | foo   | foo@example.com |
++--------+-------+-----------------+
 ```
 
 Similiarly, you can `delete` and `use` specific account by `alias`
@@ -59,7 +60,7 @@ git rebase -i <commit> # choose commit need to be edit
 # notice that `github` is the alias we create before
 gito ammend github
 # equivalent to these two commands
-# git commit --amend --author 'HomyeeKing <HomyeeKing@gmail.com>' --no-edit
+# git commit --amend --author 'foo <foo@example.com>' --no-edit
 #git rebase --continue #
 ```
 
@@ -69,6 +70,40 @@ git init with specific user info by alias
 
 ```bash
 gito init github
+```
+
+## open
+
+Open websites related to the current git repository. This command allows you to quickly open predefined or custom URLs in your browser, automatically appending the current repository's `username/repo` path.
+
+You can define custom websites using `gito open add`. There is also a default `deepwiki` configuration.
+
+### Subcommands
+
+- `gito open ls`: List all registered websites (both user-defined and default).
+- `gito open add <alias> <base_url>`: Add a new website alias with its base URL.
+- `gito open del <alias>`: Delete a user-defined website alias.
+
+### Usage Examples
+
+Open a website using an alias:
+
+```bash
+# Opens https://deepwiki.com/foo/bar (if current repo is foo/bar)
+gito open deepwiki 
+```
+
+Add a custom website:
+
+```bash
+gito open add myjira https://jira.mycompany.com/browse/
+```
+
+Then open it:
+
+```bash
+# Opens https://jira.mycompany.com/browse/foo/bar
+gito open myjira
 ```
 
 ## branch

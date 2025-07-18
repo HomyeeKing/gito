@@ -102,12 +102,17 @@ pub mod open_website {
             let url = format!("{}{}", base_url, git_info.user_repo);
             
             #[cfg(target_os = "macos")]
-            run_command("open", vec![&url]); // Use run_command
+            let output = run_command("open", vec![&url]);
             #[cfg(target_os = "linux")]
-            run_command("xdg-open", vec![&url]); // Use run_command
+            let output = run_command("xdg-open", vec![&url]);
             #[cfg(target_os = "windows")]
-            run_command("start", vec!["", &url]); // Use run_command, "start" often needs an empty first arg
-            println!("Opening: {}", url);
+            let output = run_command("start", vec!["", &url]); // "start" often needs an empty first arg for title
+
+            if !output.status.success() {
+                eprintln!("Failed to open URL: {}", String::from_utf8_lossy(&output.stderr));
+            } else {
+                println!("Opening: {}", url);
+            }
         } else {
             eprintln!("No base URL found for alias: {}", alias);
         }
