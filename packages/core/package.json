@@ -41,7 +41,6 @@
     "universal": "napi universal",
     "version": "napi version"
   },
-  "packageManager": "yarn@3.5.1",
   "optionalDependencies": {
     "@homy/gito-core-win32-x64-msvc": "1.0.1-beta.1",
     "@homy/gito-core-darwin-x64": "1.0.1-beta.1",

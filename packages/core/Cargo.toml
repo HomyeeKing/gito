@@ -7,9 +7,10 @@ authors.workspace = true
 repository.workspace = true
 homepage.workspace = true
 keywords.workspace = true
-readme.workspace = true
 license.workspace = true
 categories = ["development-tools"]
+readme = "./README.md"
+
 
 [lib]
 # https://github.com/rust-lang/cargo/issues/12653#issuecomment-1713253593
