@@ -4,12 +4,12 @@
   "main": "index.js",
   "types": "index.d.ts",
   "napi": {
-    "name": "gito-core",
-    "triples": {
-      "additional": [
-        "aarch64-apple-darwin"
-      ]
-    }
+    "binaryName": "gito-core",
+    "targets": [
+      "x86_64-pc-windows-msvc",
+      "aarch64-apple-darwin",
+      "x86_64-apple-darwin"
+    ]
   },
   "files": [
     "index.d.ts",
@@ -38,7 +38,6 @@
     "publish:allPre": "node publish-all.js --pre",
     "publish:allProd": "node publish-all.js --prod",
     "test": "ava",
-    "universal": "napi universal",
     "version": "napi version"
   },
   "optionalDependencies": {

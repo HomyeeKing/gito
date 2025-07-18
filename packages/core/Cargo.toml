@@ -1,31 +1,43 @@
+
 [package]
 name = "gito_core"
-version = "1.0.7"
+version = "1.0.8"
 description = "offering tiny easy-use api about git info"
-edition.workspace = true
-authors.workspace = true
-repository.workspace = true
-homepage.workspace = true
-keywords.workspace = true
-license.workspace = true
 categories = ["development-tools"]
 readme = "./README.md"
 
+[package.edition]
+workspace = true
+
+[package.authors]
+workspace = true
+
+[package.repository]
+workspace = true
+
+[package.homepage]
+workspace = true
+
+[package.keywords]
+workspace = true
+
+[package.license]
+workspace = true
 
 [lib]
-# https://github.com/rust-lang/cargo/issues/12653#issuecomment-1713253593
 crate-type = ["cdylib","rlib"]
 
 [dependencies]
-# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
 regex = "1"
-napi = { version = "2.12.0", default-features = false, features = ["napi4"] }
 napi-derive = "2.12.2"
+
+[dependencies.napi]
+version = "2.12.0"
+default-features = false
+features = ["napi4"]
 
 [build-dependencies]
 napi-build = "2.0.1"
 
 [features]
 independent = ["napi-derive/noop"]
-
-
