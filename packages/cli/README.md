@@ -2,6 +2,8 @@
 
 A CLI to expand the ability of `git`.
 
+[中文介绍请移步](README-zh.md)
+
 # install
 
 `cargo install gito`
