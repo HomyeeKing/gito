@@ -82,53 +82,40 @@ gito init github
 
 Open websites related to the current git repository. This command allows you to quickly open predefined or custom URLs in your browser.
 
-The `base_url` can now include placeholders:
+Assume you have this config on your device:
+```
++----------+-------------------------------------------------+
+| alias    | base_url                                        |
++----------+-------------------------------------------------+
+| deepwiki | https://deepwiki.com/                           |
++----------+-------------------------------------------------+
+| github   | https://github.com/|
++----------+-------------------------------------------------+
+```
+And your working directory is `git@github.com:HomyeeKing/gito.git` project. 
+```bash
+gito open github # will open https://github.com/HomyeeKing/gito
+```
+
+And the `base_url` can now include placeholders:
 - `<group>`: Replaced by the first part of `group/name`
 - `<name>`: Replaced by the second part of `group/name`
 - `<branch>`: Replaced by the current Git repository's branch name.
 
-If no placeholders are used, the command will automatically append the current repository's `group/name` path to the `base_url`.
-
-### Subcommands
-
-- `gito open ls`: List all registered websites (both user-defined and default).
-- `gito open add <alias> <base_url>`: Add a new website alias with its base URL.
-- `gito open del <alias>`: Delete a user-defined website alias.
-
-### Usage Examples
-
-Open a website using an alias:
-
-```bash
-# Opens https://deepwiki.com/foo/bar (if current repo is foo/bar)
-gito open deepwiki 
+You can change the github base_url as `https://github.com/<group>/<name>/tree/<branch>`
+```
++----------+-------------------------------------------------+
+| alias    | base_url                                        |
++----------+-------------------------------------------------+
+| deepwiki | https://deepwiki.com/                           |
++----------+-------------------------------------------------+
+| github   | https://github.com/<group>/<name>/tree/<branch>|
++----------+-------------------------------------------------+
 ```
 
-Add a custom website with placeholders:
+This time the browser will open if you are working on branch `feat/foo` `https://github.com/HomyeeKing/gito/tree/feat/foo`.
 
-```bash
-gito open add github_issues https://github.com/<group>/<name>/issues
-```
-
-Then open it:
-
-```bash
-# If current repo is foo/bar, opens https://github.com/foo/bar/issues
-gito open github_issues
-```
-
-Add a custom website without placeholders:
-
-```bash
-gito open add myjira https://jira.mycompany.com/browse/
-```
-
-Then open it:
-
-```bash
-# Opens https://jira.mycompany.com/browse/foo/bar
-gito open myjira
-```
+So You can assemble any base_url with it~
 
 ## branch
 
