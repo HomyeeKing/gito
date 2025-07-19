@@ -1,13 +1,13 @@
 // TODO: seprate file
 pub mod add {
-    use crate::utils::{get_config_path, safe_get_gito_config};
+    use crate::utils::{get_config_path, safe_get_gito_config, print_success};
 
     pub fn run(alias: &str, name: &str, email: &str) {
         let mut config = safe_get_gito_config("account");
         config.set_to(Some(alias), "name".to_string(), name.to_string());
         config.set_to(Some(alias), "email".to_string(), email.to_string());
         config.write_to_file(get_config_path("account")).unwrap();
-        println!("Add {alias} successfully");
+        print_success(&format!("Add {alias} successfully"));
     }
 }
 pub mod del {

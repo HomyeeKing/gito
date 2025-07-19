@@ -2,7 +2,13 @@ use std::path::PathBuf;
 
 use ini::Ini;
 use std::fs;
+use colored::Colorize;
+
 // Removed: use crate::constants::DEFAULT_OPEN_CONFIG;
+
+pub fn print_success(message: &str) {
+    println!("{}", message.green());
+}
 
 pub fn get_home_dir() -> PathBuf {
     match home::home_dir() {
