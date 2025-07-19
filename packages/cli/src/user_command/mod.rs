@@ -37,7 +37,8 @@ pub mod list {
                 group.push(Cell::new(v));
             }
 
-            if group[1].get_content() == git_user_info.username {
+            if group[1].get_content().to_lowercase() == git_user_info.username.to_lowercase() {
+                group[0] = Cell::new(&format!("*{}", group[0].get_content()));
                 for cell in group.iter_mut() {
                     cell.style(Attr::ForegroundColor(color::GREEN))
                 }
