@@ -90,12 +90,15 @@ pub mod open_website {
 
         if let Some(mut base_url) = base_url_found {
             let url: String;
-            if base_url.contains("<group>") || base_url.contains("<name>") {
+            if base_url.contains("<group>") || base_url.contains("<name>") || base_url.contains("<branch>") {
                 let parts: Vec<&str> = git_info.user_repo.split('/').collect();
                 let group = parts.get(0).unwrap_or(&"");
                 let name = parts.get(1).unwrap_or(&"");
 
-                url = base_url.replace("<group>", group).replace("<name>", name);
+                url = base_url
+                    .replace("<group>", group)
+                    .replace("<name>", name)
+                    .replace("<branch>", &git_info.current_branch);
             } else {
                 // Ensure base_url ends with a slash if no placeholders are used
                 if !base_url.ends_with('/') {

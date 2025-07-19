@@ -45,6 +45,7 @@
 `base_url` 现在可以包含占位符：
 - `<group>`: 替换为 `username/repo` 的第一部分（例如，`username` 在 `username/repo` 中）。
 - `<name>`: 替换为 `username/repo` 的第二部分（例如，`repo` 在 `username/repo` 中）。
+- `<branch>`: 替换为当前 Git 仓库的分支名称。
 
 如果未使用占位符，命令将自动将当前仓库的 `username/repo` 路径附加到 `base_url`。
 
@@ -53,5 +54,7 @@
 ## branch
 
 执行各种分支操作。
+
+`<branch>` 关键词是一个占位符，表示 Git 分支的名称。它用于需要指定特定分支的命令中，例如删除分支。
 
 更多详情，请运行 `gito branch -h`。

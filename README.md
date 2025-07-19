@@ -85,6 +85,7 @@ Open websites related to the current git repository. This command allows you to 
 The `base_url` can now include placeholders:
 - `<group>`: Replaced by the first part of `group/name`
 - `<name>`: Replaced by the second part of `group/name`
+- `<branch>`: Replaced by the current Git repository's branch name.
 
 If no placeholders are used, the command will automatically append the current repository's `group/name` path to the `base_url`.
 
