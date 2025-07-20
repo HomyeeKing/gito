@@ -419,7 +419,7 @@ version = "0.2.13"
 dependencies = [
  "clap",
  "colored",
- "gito_core 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gito_core 1.0.8",
  "home",
  "prettytable",
  "regex",
@@ -432,6 +432,8 @@ dependencies = [
 [[package]]
 name = "gito_core"
 version = "1.0.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "951f67a99230d896409b29f6c9e5832df79797347c34aaf98b80f6a1f22cd825"
 dependencies = [
  "napi",
  "napi-build",
@@ -441,9 +443,7 @@ dependencies = [
 
 [[package]]
 name = "gito_core"
-version = "1.0.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "951f67a99230d896409b29f6c9e5832df79797347c34aaf98b80f6a1f22cd825"
+version = "1.0.9"
 dependencies = [
  "napi",
  "napi-build",

@@ -1,7 +1,7 @@
 
 [package]
 name = "gito_core"
-version = "1.0.8"
+version = "1.0.9"
 description = "offering tiny easy-use api about git info"
 categories = ["development-tools"]
 readme = "./README.md"
